@@ -40,7 +40,14 @@ async function run() {
         const servicesCollection = database.collection('MustafizPlaces');
 
 
+        // GET API
 
+        app.get('/mustafiztoursim', async (req, res) => {
+            // res.send('Hello World from education')
+            const cursor = servicesCollection.find({});
+            const toursimdata = await cursor.toArray();
+            res.send(toursimdata);
+        })
 
 
     }
