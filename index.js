@@ -37,18 +37,56 @@ async function run() {
         console.log('database connected');
 
         const database = client.db('MustafizToursimSite');
-        const servicesCollection = database.collection('MustafizPlaces');
+        const travelCollection = database.collection('MustafizPlaces');
 
+        const bookingCollection = client.db("MustafizToursimSite").collection("booking");
+
+        // const blogCollection = client.db("MustafizToursimSite").collection("blog");
 
         // GET API
 
-        app.get('/mustafiztoursim', async (req, res) => {
+        app.get('/travel', async (req, res) => {
             // res.send('Hello World from education')
-            const cursor = servicesCollection.find({});
+            const cursor = travelCollection.find({});
             const toursimdata = await cursor.toArray();
             res.send(toursimdata);
         })
 
+        // GET API FROM Single ID
+
+
+        // POST API FOR  Add  NEW TravelList
+
+        app.post('/travel', async (req, res) => {
+            const travel = req.body;
+            console.log('hit the post api', travel);
+
+            const result = await travelCollection.insertOne(travel);
+            console.log(result);
+            res.json(result)
+        });
+
+
+        // POST API FOR Add Confirm Bookings
+        app.post('/booking', async (req, res) => {
+            const booking = req.body;
+            console.log('hit the post api', booking);
+
+            const result = await bookingCollection.insertOne(booking);
+            console.log(result);
+            res.json(result)
+        });
+
+        // GET API FOR  COnfirm Booking
+
+
+
+
+
+
+        // POST API FOR ADD Travel BLOG
+
+        // GET API FOR Travel BloG
 
     }
     finally {
