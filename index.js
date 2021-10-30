@@ -80,12 +80,31 @@ async function run() {
         // GET API FOR  COnfirm Booking
 
         app.get('/booking', async (req, res) => {
-            // res.send('Hello World from education')
+            // res.send('Hello World from booking')
             const cursor = bookingCollection.find({});
             const bookingdata = await cursor.toArray();
             res.send(bookingdata);
         })
 
+        // GET API for Booking ID only
+        app.get('/booking/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const booking = await bookingCollection.findOne(query);
+            // console.log('load user with id: ', id);
+            res.send(booking);
+        })
+
+
+        // DELETE BOOKING
+
+        app.delete("/booking/:id", async (req, res) => {
+            console.log(req.params.id);
+            const result = await bookingCollection.deleteOne({
+                _id: ObjectId(req.params.id),
+            });
+            res.send(result);
+        });
 
 
 
