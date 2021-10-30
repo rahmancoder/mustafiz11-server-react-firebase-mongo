@@ -98,19 +98,38 @@ async function run() {
 
         // DELETE BOOKING
 
-        app.delete("/booking/:id", async (req, res) => {
-            console.log(req.params.id);
-            const result = await bookingCollection.deleteOne({
-                _id: ObjectId(req.params.id),
-            });
-            res.send(result);
-        });
+        // app.delete("/booking/:id", async (req, res) => {
+        //     console.log(req.params.id);
+        //     const result = await bookingCollection.deleteOne({
+        //         _id: ObjectId(req.params.id),
+        //     });
+        //     res.send(result);
+        // });
+
+        app.delete('/booking/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await usersCollection.deleteOne(query);
+
+            console.log('deleting user with id ', result);
+
+            res.json(result);
+        })
+
+
+
+
 
 
 
         // POST API FOR ADD Travel BLOG
 
         // GET API FOR Travel BloG
+
+
+
+
+
 
     }
     finally {
