@@ -79,7 +79,12 @@ async function run() {
 
         // GET API FOR  COnfirm Booking
 
-
+        app.get('/booking', async (req, res) => {
+            // res.send('Hello World from education')
+            const cursor = bookingCollection.find({});
+            const bookingdata = await cursor.toArray();
+            res.send(bookingdata);
+        })
 
 
 
