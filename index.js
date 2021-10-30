@@ -53,7 +53,13 @@ async function run() {
         })
 
         // GET API FROM Single ID
-
+        app.get('/travel/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const travel = await travelCollection.findOne(query);
+            // console.log('load user with id: ', id);
+            res.send(travel);
+        })
 
         // POST API FOR  Add  NEW TravelList
 
@@ -67,15 +73,7 @@ async function run() {
         });
 
 
-        // POST API FOR Add Confirm Bookings
-        app.post('/booking', async (req, res) => {
-            const booking = req.body;
-            console.log('hit the post api', booking);
 
-            const result = await bookingCollection.insertOne(booking);
-            console.log(result);
-            res.json(result)
-        });
 
         // GET API FOR  COnfirm Booking
 
@@ -95,6 +93,16 @@ async function run() {
             res.send(booking);
         })
 
+        // POST API FOR Add Confirm Bookings
+        app.post('/booking', async (req, res) => {
+            const booking = req.body;
+            console.log('hit the post api', booking);
+
+            const result = await bookingCollection.insertOne(booking);
+            console.log(result);
+            res.json(result)
+        });
+
 
         // DELETE BOOKING
 
@@ -109,7 +117,7 @@ async function run() {
         app.delete('/booking/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const result = await usersCollection.deleteOne(query);
+            const result = await bookingCollection.deleteOne(query);
 
             console.log('deleting user with id ', result);
 
