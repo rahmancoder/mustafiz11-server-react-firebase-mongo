@@ -41,7 +41,7 @@ async function run() {
 
         const bookingCollection = client.db("MustafizToursimSite").collection("booking");
 
-        // const blogCollection = client.db("MustafizToursimSite").collection("blog");
+        const blogCollection = client.db("MustafizToursimSite").collection("blog");
 
         // GET API
 
@@ -133,6 +133,35 @@ async function run() {
         // POST API FOR ADD Travel BLOG
 
         // GET API FOR Travel BloG
+
+        // GET API
+
+        app.get('/blog', async (req, res) => {
+            // res.send('Hello World from education')
+            const cursor = blogCollection.find({});
+            const blogdata = await cursor.toArray();
+            res.send(blogdata);
+        })
+
+        // GET API FROM Single ID
+        app.get('/blog/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const blog = await blogCollection.findOne(query);
+            // console.log('load user with id: ', id);
+            res.send(blog);
+        })
+
+        // POST API FOR  Add  NEW TravelList
+
+        app.post('/blog', async (req, res) => {
+            const blog = req.body;
+            console.log('hit the post api', blog);
+
+            const result = await blogCollection.insertOne(blog);
+            console.log(result);
+            res.json(result)
+        });
 
 
 
